@@ -1,0 +1,103 @@
+{
+  "name": "Quote",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 12
+            },
+            {}
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        0
+      ],
+      "id": "2d3b1cd2-2bad-40a8-9849-9592e6245eb9",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "url": "https://api.quotable.io/random?tags=technology|inspirational",
+        "options": {
+          "allowUnauthorizedCerts": true
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        208,
+        0
+      ],
+      "id": "0fbe4862-1632-4985-a032-862a5faaf665",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "sendTo": "yashrathod1672@gmail.com",
+        "subject": "Quote ",
+        "emailType": "text",
+        "message": "={{$json[\"content\"]}} — {{$json[\"author\"]}}",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        416,
+        0
+      ],
+      "id": "8471b387-7bb5-4731-b34f-8a1eec8ed225",
+      "name": "Send a message",
+      "webhookId": "d52b76d0-699d-4713-956a-ac7259a8d4f0",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "NKhGDM3ePb6CR6d1",
+          "name": "Gmail account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "3e37324b-9ca6-4a0d-b35b-b54096c4c28f",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "15e0ce9d463124586db54362b841186f8d2bd57dd4fe2585c3dcff4732823119"
+  },
+  "id": "qcfofJ7l7D97zMTq",
+  "tags": []
+}
